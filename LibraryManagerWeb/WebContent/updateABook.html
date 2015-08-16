@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>UPDATE A Book</title>
+<script src="scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+	<h1>Please provide the book ISBN as a update key:</h1>
+
+     ISBN: <input type="text" name="isbn" id="isbn"> <br>
+     
+     Book Title: <input type="text" name="title" id="title"> <br>
+	Author: <input type="text" name="author" id="author"> <br> 
+	Pages: <input type="text" name="pages" id="pages"> <br> 
+     
+     <br>
+
+	<button id="updateButton"  value="Update">Update</button>
+
+	<script type="text/javascript">
+    document.getElementById("updateButton").onclick = function () {
+    	var theUrl = "library/LibraryServlet/" + $("#isbn").val()+"/"+ $("#title").val()+"/"+$("#author").val()+"/"+$("#pages").val();     	
+    	$.ajax({
+             type: "POST",
+             url: theUrl, 
+             cache: false,
+             
+             success: function (data) {
+                 alert("The book has been successfully updated");
+             },
+             
+             error: function (xhr, message, errorThrown) {
+                 alert("Error occurred: " + "cannot update the book since the books does not exist");
+             }
+         });
+    };
+    </script>
+</body>
+</html>

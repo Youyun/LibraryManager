@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>DELETE A Book</title>
+<script src="scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+
+</head>
+<body>
+	<h1>Please provide the book ISBN as a delete key:</h1>
+
+     ISBN: <input type="text" name="isbn" id="isbn"> <br>
+     
+     <br>
+
+	<button id="deleteButton"  value="Delete">Delete</button>
+
+	<script type="text/javascript">
+    document.getElementById("deleteButton").onclick = function () {
+    	var theUrl = "library/LibraryServlet/" + $("#isbn").val(); 
+    	$.ajax({
+             type: "POST",
+             url: theUrl, 
+             cache: false,
+             
+             success: function (data) {
+                 alert(data);
+             },
+             
+             error: function (xhr, message, errorThrown) {
+                 alert("Error occurred: " + "cannot delete the book since the books does not exist");
+             }
+         });
+    };
+    </script>
+</body>
+</html>

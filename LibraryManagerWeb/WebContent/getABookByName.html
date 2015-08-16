@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Search A Book</title>
+<script src="scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<h1>Please provide the book ISBN as a search key:</h1>
+
+	ISBN: <input type="text" name="isbn" id="isbn"> <br>
+		
+	<br>
+	<button id="searchButton" onClick="searchABook();" value="Search">Search</button>
+
+	<script type="text/javascript">
+    document.getElementById("searchButton").onclick = function () {
+    	var theUrl = "library/LibraryServlet/" + $("#isbn").val(); 
+    	$.ajax({
+            type: "GET",
+            url: theUrl, 
+            cache: false,
+            
+            success: function (data) {
+                alert("Sccessfully find a book" + "\n Book details:" + data.title + " " + data.authors + " " + data.pages + " " + data.isbn);
+                
+            },
+            
+            error: function (xhr, message, errorThrown) {
+                alert("Error occurred: " + "Book is not found");
+            }
+        });
+    };
+    </script>
+</body>
+</html>

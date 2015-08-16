@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Library Manager System</title>
+<script src="scripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+<fieldset id="allBooks">
+    <legend>All books</legend>
+    <ul id="resultlist"></ul>
+</fieldset>
+
+<input type="button" id="addBook" value="Add A Book">
+<input type="button" id="deleteBook" value="Delete A Book">
+<input type="button" id="updateBook" value="Update A Book">
+<input type="button" id="serachBook" value="Find A Book">
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+    getAllBooks();
+    
+    $(this).on("click", "#addBook", function () {
+    	window.location = 'addBook.html';
+    });
+    
+    $(this).on("click", "#deleteBook", function () {
+    	window.location = 'deleteABook.html';
+    });
+    
+    $(this).on("click", "#updateBook", function () {
+    	window.location = 'updateABook.html';
+    });
+    
+    $(this).on("click", "#serachBook", function () {
+    	window.location = 'getABookByName.html';
+    });
+    
+});
+
+function getAllBooks() {
+	var list = $("#resultlist");
+    list.empty();
+
+    // Send an Ajax request to GET all books.
+    $.ajax({
+        type: "GET",
+        url: "library/LibraryServlet",
+        success: function (data) {
+        	var list = $("#resultlist");
+        	
+        	$.each(data, function (index, book) {
+                list.append(
+                		"<li>[ " + book.id + " ] " + 
+                        book.title + ", written by" +
+                        book.authors +
+                        " [ Pages: " + book.pages + ", ISBN: " + 
+                        book.isbn + " ]</li>");
+            });
+        },
+        error: function (xhr, message, errorThrown) {
+            alert("Ajax error occurred: " + message);
+        }
+    });
+}
+</script>
+</body>
+</html>
